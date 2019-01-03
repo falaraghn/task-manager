@@ -52,13 +52,13 @@ const Welcome = () => (
                         <div className="other__content">
                             <h3>API</h3>
                             <ButtonsGroup
-                                httpLink="http://localhost:8080"
-                                httpsLink="https://localhost:8443"
+                                httpLink="http://localhost:8080/api"
+                                httpsLink="https://localhost:8443/api"
                             />
                             <h3>Cached API</h3>
                             <ButtonsGroup
-                                httpLink="http://localhost:8081"
-                                httpsLink="https://localhost:8444"
+                                httpLink="http://localhost:8081/api"
+                                httpsLink="https://localhost:8444/api"
                             />
                         </div>
                     </div>

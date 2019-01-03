@@ -29,11 +29,11 @@ script:
   - docker-compose exec -T php bin/console security:check
   - curl http://localhost # Client
   - curl http://localhost:81 # Admin
-  - curl http://localhost:8080 # API
+  - curl http://localhost:8080/api # API
   - curl http://localhost:8081 # Varnish
   - curl -k https://localhost # Client (HTTP/2)
   - curl -k https://localhost:444 # Admin (HTTP/2)
-  - curl -k https://localhost:8443 # API (HTTP/2)
+  - curl -k https://localhost:8443/api # API (HTTP/2)
   - curl -k https://localhost:8444 # Varnish (HTTP/2)
   - helm lint ./api/helm/api/
 
