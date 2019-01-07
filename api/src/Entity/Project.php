@@ -79,7 +79,7 @@ class Project
 
     public function setCompletionLevel(int $completionLevel): self
     {
-        $this->completionLevel = $completionLevel;
+        $this->completionLevel = (int) $completionLevel;
 
         return $this;
     }

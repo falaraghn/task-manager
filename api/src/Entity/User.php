@@ -9,7 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity
- * @ApiResource()
+ * @ApiResource(
+ * )
  */
 class User implements UserInterface
 {
@@ -65,7 +66,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return $this->roles;
+        return array($this->roles);
     }
 
     public function eraseCredentials()
@@ -96,7 +97,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(string $roles): self
     {
         $this->roles = $roles;
 
