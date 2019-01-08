@@ -4,9 +4,9 @@ register:
   methods: POST
 
 test:
-  path: /get_logged
+  path: /api/get_logged
   controller: App\Controller\AuthController::getLogged
 
-login_check:
+api_login_check:
   path:     /login_check
   methods:  [POST]

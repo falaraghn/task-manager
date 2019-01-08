@@ -7,8 +7,8 @@ export const create = ({commit}, values) => {
     commit(types.PROJECT_CREATE_TOGGLE_LOADING)
 
     values['completionLevel'] = parseInt(values['completionLevel']);
-    return fetch('/projects', {method: 'POST', body: JSON.stringify(values)})
-    // return fetch('/projects', { method: 'POST', body: {} })
+
+    return fetch('/api/projects', {method: 'POST', body: JSON.stringify(values)})
         .then((response) => {
             commit(types.PROJECT_CREATE_TOGGLE_LOADING)
 

@@ -47,7 +47,7 @@
           </tr>
           <tr>
             <td>roles</td>
-            <td>{{ item['roles'] }}</td>
+            <td>{{ item['roles'][0] }}</td>
           </tr>
           <tr>
             <td>isActive</td>
