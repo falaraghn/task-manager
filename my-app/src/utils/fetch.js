@@ -1,6 +1,6 @@
 import SubmissionError from '../error/SubmissionError'
 import {ENTRYPOINT} from '../config/entrypoint';
-
+import auth from './auth'
 const MIME_TYPE = 'application/ld+json'
 
 export default function (id, options = {}) {
@@ -11,6 +11,8 @@ export default function (id, options = {}) {
     if (options.body !== undefined && !(options.body instanceof FormData) && options.headers.get('Content-Type') === null) {
         options.headers.set('Content-Type', MIME_TYPE)
     }
+
+    options.headers.set('Authorization',auth.getAuthHeader())
 
     return fetch(new URL(id,ENTRYPOINT).toString(), options).then((response) => {
         if (response.ok) return response

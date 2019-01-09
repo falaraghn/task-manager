@@ -28,7 +28,7 @@ export default {
 console.log(action);
         axios.post(url, creds)
             .then((response) => {
-                localStorage.setItem('id_token', response.data.token)
+                localStorage.setItem('token', response.data.token)
                 let userInfo = VueJWTDecode.decode(response.data.token);
                 this.user.authenticated = true;
                 this.user.role = userInfo.roles[0];
@@ -46,7 +46,7 @@ console.log(action);
     ,
 
     logout() {
-        localStorage.removeItem('id_token')
+        localStorage.removeItem('token')
         this.user.authenticated = false;
         this.user.role = null;
         this.user.username = null;
@@ -54,7 +54,7 @@ console.log(action);
     ,
 
     checkAuth() {
-        var jwt = localStorage.getItem('id_token')
+        var jwt = localStorage.getItem('token')
         if (jwt) {
             this.user.authenticated = true
         } else {
@@ -64,8 +64,8 @@ console.log(action);
     ,
 
     getAuthHeader() {
-        return {
-            'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-        }
+        console.log(localStorage);
+        return 'Bearer ' + localStorage.getItem('token')
+
     }
 }
