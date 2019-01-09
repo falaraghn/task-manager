@@ -18,31 +18,37 @@ class AuthController extends AbstractController
 {
     public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        $em = $this->getDoctrine()->getManager();
+        try {
+            $em = $this->getDoctrine()->getManager();
 
-        $requestContent = json_decode($request->getContent(), true);
-        $username = $requestContent['username'];
-        $password = $requestContent['password'];
-        $role = isset($requestContent['roles']) ? $requestContent['roles'] :  'ROLE_USER' ;
-        $isActive = isset($requestContent['isActive']) ? $requestContent['isActive'] :  false ;
+            $requestContent = json_decode($request->getContent(), true);
+            $username = $requestContent['username'];
+            $password = $requestContent['password'];
+            $role = isset($requestContent['roles']) ? $requestContent['roles'] : 'ROLE_USER';
+            $isActive = isset($requestContent['isActive']) ? $requestContent['isActive'] : false;
 
-        $user = new User($username);
-        $user->setPassword($encoder->encodePassword($user, $password));
-        $user->setRoles($role);
-        $user->setIsActive($isActive);
-        $em->persist($user);
-        $em->flush();
+            $user = new User($username);
+            $user->setPassword($encoder->encodePassword($user, $password));
+            $user->setRoles($role);
+            $user->setIsActive($isActive);
+            $em->persist($user);
+            $em->flush();
 
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
+//            $encoders = array(new XmlEncoder(), new JsonEncoder());
+//            $normalizers = array(new ObjectNormalizer());
+//
+//            $serializer = new Serializer($normalizers, $encoders);
 
-        $serializer = new Serializer($normalizers, $encoders);
-
-        return new JsonResponse($serializer->serialize($user, 'json'));
+            return new JsonResponse(['id' => $user->getId()]);
+        } catch (\Exception $exception) {
+            return new JsonResponse(['code' => 500, 'message' => 'Server side error', 'detail' => $exception->getMessage()], 500);
+        }
     }
 
     public function getLogged()
     {
         return new Response(sprintf('Logged in as %s', $this->getUser()->getUsername()));
     }
+
+
 }

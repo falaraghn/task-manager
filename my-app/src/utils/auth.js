@@ -25,21 +25,21 @@ export default {
             default:
                 url = LOGIN_URL;
         }
-console.log(action);
         axios.post(url, creds)
             .then((response) => {
                 localStorage.setItem('token', response.data.token)
-                let userInfo = VueJWTDecode.decode(response.data.token);
-                this.user.authenticated = true;
-                this.user.role = userInfo.roles[0];
-                this.user.username = userInfo.username;
-                console.log(userInfo);
-
-                if (redirect) {
-                    router.push(redirect)
+                if (url === LOGIN_URL) {
+                    let userInfo = VueJWTDecode.decode(response.data.token);
+                    this.user.authenticated = true;
+                    this.user.role = userInfo.roles[0];
+                    this.user.username = userInfo.username;
+                    if (redirect) {
+                        router.push(redirect)
+                    }
+                } else {
+                    router.push('/login')
                 }
             }).catch((err) => {
-                console.log(err);
             context.error = err.response.data.message
         })
     }
@@ -54,17 +54,20 @@ console.log(action);
     ,
 
     checkAuth() {
-        var jwt = localStorage.getItem('token')
-        if (jwt) {
-            this.user.authenticated = true
+        let userInfo = localStorage.getItem('token') ? VueJWTDecode.decode(localStorage.getItem('token')) : null;
+        if (userInfo) {
+            this.user.authenticated = true;
+            this.user.role = userInfo.roles[0];
+            this.user.username = userInfo.username;
         } else {
-            this.user.authenticated = false
+            this.user.authenticated = false;
+            this.user.role = null;
+            this.user.username = null;
         }
     }
     ,
 
     getAuthHeader() {
-        console.log(localStorage);
         return 'Bearer ' + localStorage.getItem('token')
 
     }

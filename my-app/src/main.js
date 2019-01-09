@@ -37,6 +37,7 @@ export const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    auth.checkAuth()
     if (to.matched.some(record => record.meta.role)) {
         let permission = to.matched[0].meta.role;
 
