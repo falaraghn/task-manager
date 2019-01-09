@@ -36,6 +36,32 @@ export const router = new VueRouter({
     ]
 });
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.role)) {
+        let permission = to.matched[0].meta.role;
+
+        if(permission === 'admin') {
+            if(auth.user.role !== 'ROLE_ADMIN' || !auth.user.authenticated) {
+                next({
+                            path: '/login',
+                            query: { redirect: to.fullPath }
+                        })
+            }
+        }
+
+        if(permission === 'user') {
+            if(!auth.user.authenticated) {
+                next({
+                            path: '/login',
+                            query: { redirect: to.fullPath }
+                        })
+            }
+        }
+        next()
+    } else {
+        next()
+    }
+})
 new Vue({
     el: '#app',
     store,
