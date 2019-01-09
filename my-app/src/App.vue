@@ -13,6 +13,9 @@
                 <li v-if="!user.authenticated">
                     <router-link :to="{ name: 'Login' }">Login</router-link>
                 </li>
+                <li v-if="!user.authenticated">
+                    <router-link :to="{ name: 'Signup' }">Sign up</router-link>
+                </li>
                 <li v-if="user.authenticated" @click="logout()">
                     <router-link to="/login">Logout</router-link>
                 </li>

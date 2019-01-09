@@ -1,12 +1,13 @@
 <template>
     <div class="col-sm-4 col-sm-offset-4">
-        <h2>Log In</h2>
-        <p>Log in to your account to get some great quotes.</p>
+        <h2>Sign Up</h2>
+        <p>Please Sign Up</p>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
         <div class="form-group">
             <input
+                    required
                     type="text"
                     class="form-control"
                     placeholder="Enter your username"
@@ -15,11 +16,23 @@
         </div>
         <div class="form-group">
             <input
+                    required
                     type="password"
                     class="form-control"
                     placeholder="Enter your password"
                     v-model="credentials.password"
             >
+        </div>
+        <div class="form-group">
+            <select
+                    required
+                    class="form-control"
+                    v-model="credentials.roles"
+            >
+                <option value="">...</option>
+                <option value="ROLE_ADMIN">Administrator</option>
+                <option value="ROLE_USER">Ordinary user</option>
+            </select>
         </div>
         <button class="btn btn-primary" @click="submit()">Access</button>
     </div>
@@ -32,7 +45,8 @@
             return {
                 credentials: {
                     username: '',
-                    password: ''
+                    password: '',
+                    roles:''
                 },
                 error: ''
             }
@@ -41,10 +55,11 @@
             submit() {
                 var credentials = {
                     username: this.credentials.username,
-                    password: this.credentials.password
+                    password: this.credentials.password,
+                    roles: this.credentials.roles
                 }
 
-                auth.login_or_signup('login',this, credentials, './')
+                auth.login_or_signup('signup', this, credentials, './')
             }
         }
     }
