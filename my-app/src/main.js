@@ -3,6 +3,12 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import App from './App.vue';
 
+
+import Login from './components/login/Login';
+import auth from './utils/auth';
+
+import axios from 'axios';
+
 import project from './store/modules/project/';
 import user from './store/modules/user/';
 import projectRoutes from './router/project';
@@ -18,11 +24,13 @@ const store = new Vuex.Store({
     }
 });
 
-const router = new VueRouter({
+export const router = new VueRouter({
     mode: 'history',
     routes: [
         ...projectRoutes,
-        ...userRoutes
+        ...userRoutes,
+        { name: 'Login',path: '/login', component: Login },
+        // // { name: 'Home',path: '/'},
     ]
 });
 

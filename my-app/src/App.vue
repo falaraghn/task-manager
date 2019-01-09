@@ -1,55 +1,72 @@
 <template>
-  <div class="container">
-    <nav>
-      <ul class="nav nav-justified">
-        <!-- Replace Foo with your resource name -->
-        <li class="active"><router-link :to="{ name: 'ProjectList' }">Projects</router-link></li>
-        <li class="active"><router-link :to="{ name: 'UserList' }">Users</router-link></li>
-      </ul>
-    </nav>
-
-    <div>
-      <router-view></router-view>
+    <div class="container">
+        <nav>
+            <span v-if="user.authenticated">Logged as {{user.username}} ({{user.role}})</span>
+            <ul class="nav nav-justified">
+                <!-- Replace Foo with your resource name -->
+                <li v-if="user.authenticated">
+                    <router-link :to="{ name: 'ProjectList' }">Projects</router-link>
+                </li>
+                <li v-if="user.authenticated">
+                    <router-link :to="{ name: 'UserList' }">Users</router-link>
+                </li>
+                <li v-if="!user.authenticated">
+                    <router-link :to="{ name: 'Login' }">Login</router-link>
+                </li>
+                <li v-if="user.authenticated" @click="logout()">
+                    <router-link to="/login">Logout</router-link>
+                </li>
+            </ul>
+        </nav>
+        <div>
+            <router-view></router-view>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    import auth from './utils/auth'
+
+    export default {
+        data() {
+            return {
+                user: auth.user
+            }
+        },
+        methods: {
+            logout() {
+                auth.logout()
+            }
+        }
     }
-  }
-}
 </script>
 
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    #app {
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+    }
 
-h1, h2 {
-  font-weight: normal;
-}
+    h1, h2 {
+        font-weight: normal;
+    }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+    li {
+        display: inline-block;
+        margin: 0 10px;
+    }
 
-a {
-  color: #42b983;
-}
+    a {
+        color: #42b983;
+    }
 </style>
