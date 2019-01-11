@@ -8,6 +8,9 @@
                     <router-link :to="{ name: 'ProjectList' }">Projects</router-link>
                 </li>
                 <li v-if="user.authenticated">
+                    <router-link :to="{ name: 'ProjectScheduler' }">Scheduler</router-link>
+                </li>
+                <li v-if="user.authenticated">
                     <router-link :to="{ name: 'UserList' }">Users</router-link>
                 </li>
                 <li v-if="!user.authenticated">
